@@ -1,0 +1,122 @@
+Notes from initial analysis of Barunba:
+
+Text is only shown at the beginning of each level; the levels are:
+- Float Island Area
+- Lake Area
+- Mountain Area
+- Cave Area
+- Fortress Area
+
+
+These names are displayed as sprites based on hiragana letters.
+The hiragana are loaded into VRAM, directly from the ROM (uncompressed)
+BANK $15:0000-1FFF -> VRAM $6000
+
+fu = $6200 (pattern = $0188)
+ro = $6240 (pattern = $0189)
+do = $6280 (pattern = $018A)
+e  = $62C0 (pattern = $018B)
+ke = $6300 (pattern = $018C)
+"  = $6340 (pattern = $018D)  (this is a diacritic)
+-  = $6600 (pattern = $0198)
+to = $6640 (pattern = $0199)
+ri = $6680 (pattern = $019A)
+re = $66c0 (pattern = $019B)
+xo = $6700 (pattern = $019C) (small "o")
+su = $6740 (pattern = $019D)
+a  = $6A00 (pattern = $01A8)
+i  = $6A40 (pattern = $01A9)
+ku = $6A80 (pattern = $01AA)
+ma = $6AC0 (pattern = $01AB)
+ra = $6E00 (pattern = $01B8)
+b  = $6E40 (pattern = $01B9)
+u  = $6E80 (pattern = $01BA)
+te = $6EC0 (pattern = $01BB)
+
+empty spaces apparently at:
+- $67C0 (ROM offset 0x2AF80 - 0x2AFFF)
+- $6B00, $6B40, $6B80, $6BC0 (ROM offset 0x2B600 - 0x2B7FF)
+- $6F00, $6F40, $6F80, $6FC0 (ROM offset 0x2BE00 - 0x2BFFF)
+
+Float Area sprites are loaded into SAT at $02:$A38D and surrounding code
+It seems to reference a table at roughly $0E:$44F4 to load the sprites:
+
+Floating Island Area: (Lv 1)
+---------------------
+-> $44F3 (0x1C4F3) = 0C = 12 sprites
+$44F8 (0x1C4F8) = 10 03 (fu)
+$44FE (0x1C4FE) = 12 03 (ro)
+$4504 (0x1C504) = 30 03 (-)
+$450A (0x1C50A) = 32 03 (to)
+$4510 (0x1C510) = 50 03 (a)
+$4516 (0x1C516) = 52 03 (i)
+$451C (0x1C51C) = 70 03 (ra)
+$4522 (0x1C522) = 72 03 (n)
+$4528 (0x1C528) = 14 03 (do)
+$452E (0x1C52E) = 16 03 (e)
+$4534 (0x1C534) = 34 03 (ri)
+$453A (0x1C53A) = 50 03 (a)
+
+Lake Area: (Lv 2)
+----------
+-> $453D (0x1C53D) = 06 = 6 sprites
+$4542 (0x1C542) = 36 03 (re)
+$4548 (0x1C548) = 52 03 (i)
+$454E (0x1C54E) = 54 03 (ku)
+$4554 (0x1C554) = 16 03 (e)
+$455A (0x1C55A) = 34 03 (ri)
+$4560 (0x1C560) = 50 03 (a)
+
+Mountain Area: (Lv 3)
+--------------
+-> $4563 (0x1C563) = 08 = 8 sprites
+$4568 (0x1C568) = 56 03 (ma)
+$456E (0x1C56E) = 74 03 (u)
+$4574 (0x1C574) = 72 03 (n)
+$457A (0x1C57A) = 76 03 (te)
+$4580 (0x1C580) = 72 03 (n)
+$4586 (0x1C586) = 16 03 (e)
+$458C (0x1C58C) = 34 03 (ri)
+$4592 (0x1C592) = 50 03 (a)
+
+
+Fortress Area: (Lv 5)
+--------------
+-> $4595 (0x1C595) = 09 = 9 sprites
+$459A (0x1C59A) = 10 03 (fu)
+$45A0 (0x1C5A0) = 38 03 (xo)
+$45A6 (0x1C5A6) = 30 03 (-)
+$45AC (0x1C5AC) = 32 03 (to)
+$45B2 (0x1C5B2) = 36 03 (re)
+$45B8 (0x1C5B8) = 3A 03 (su)
+$45BE (0x1C5BE) = 16 03 (e)
+$45C4 (0x1C5C4) = 34 03 (ri)
+$45CA (0x1C5CA) = 50 03 (a)
+
+Cave Area: (Lv 4)
+----------
+-> $45CD (0x1C5CD) = 07 = 7 sprites
+$45D2 (0x1C5D2) = 18 03 (ke)
+$45D8 (0x1C5D8) = 52 03 (i)
+$45DE (0x1C5DE) = 10 03 (fu)
+$45E4 (0x1C5E4) = 1A 03 (")
+$45EA (0x1C5EA) = 16 03 (e)
+$45F0 (0x1C5F0) = 34 03 (ri)
+$45F6 (0x1C5F6) = 50 03 (a)
+
+Pointers to beginnings of these blocks seem to be at:
+$41F6 (0x1C1F6) = F2 44 (Float Island)
+$41F8 (0x1C1F8) = 3C 45 (Lake)
+$41FA (0x1C1FA) = 62 45 (Mountain)
+$41FC (0x1C1FC) = CC 45 (Cave)
+$41FE (0x1C1FE) = 94 45 (Fortress)
+
+
+If this table needs more space, or needs to be relocated, this Bank has
+about 5KB free (yes, over half !)
+
+
+If we use the above English translations, 16 letters will be needed:
+ACDEFIKLMNORSTUV
+
+
