@@ -1,0 +1,42 @@
+
+----------------
+Barunba (HuCARD)
+----------------
+English Translation Patch
+Version 1.0
+
+---------------
+About the Patch
+===============
+
+The game is fully playable in English; the level names are translated here.
+This patch has been made available for free.
+Commercial use is strictly forbidden--including but not limited to "repros."
+
+------------------
+Applying the Patch
+==================
+
+Lunar IPS is an easy-to-use Windows tool to apply IPS patches to ROMs
+available here: https://fusoya.eludevisibility.org/lips/
+or here: http://www.romhacking.net/utilities/240/
+
+
+-------------
+Dave's Notes
+=============
+
+This was a very short project - only the names of the areas needed to be
+translated.  The game was playable without the translation, but the katakana
+names of the areas was a minor distraction while playing.
+
+While not the most technical demanding of translations, it's always nice to
+smothe the edges on a game, to make it seem more like an original release
+would have.
+
+4lorn and and I hope everyone enjoys this English translation of Barunba !
+
+---------
+Viva NEC!
+=========
+
